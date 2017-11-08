@@ -38,7 +38,7 @@
 # --publish-rm 8082/tcp \
 # --publish-rm 8083/tcp \
 # --publish-rm 8084/tcp \
-# --publish-rm 8085/tcp \
+# --publish-rm 8085/tcp
 
 FROM python:3
 
