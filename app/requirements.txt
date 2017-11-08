@@ -1,0 +1,5 @@
+pip
+Flask
+gunicorn
+psutil
+netifaces
