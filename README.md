@@ -35,8 +35,6 @@ docker service create --detach=false \
  rlagutinhub/docker_swarm-mode.haproxy-test:201711082130
 ```
 
-Other:
-
 #### ADD Publish Ports (not required for a haproxy-balancer test):
 
 ```console
@@ -63,5 +61,7 @@ docker service update --detach=false \
  --publish-rm 8084/tcp \
  --publish-rm 8085/tcp
  ```
+ 
+---
 
 ![alt text](https://github.com/rlagutinhub/docker_swarm-mode.haproxy-test/blob/master/screen.png)
