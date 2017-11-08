@@ -1,4 +1,4 @@
-## Docker: joomla
+## Docker: docker_swarm-mode.haproxy-test
 
 Compiled Docker image: https://hub.docker.com/r/rlagutinhub/docker_swarm-mode.haproxy-test/
 
