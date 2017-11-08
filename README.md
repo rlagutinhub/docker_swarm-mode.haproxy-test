@@ -64,4 +64,4 @@ docker service update --detach=false \
  --publish-rm 8085/tcp
  ```
 
-![alt text](docker_swarm-mode.haproxy-test/screen.png)
+![alt text](https://github.com/rlagutinhub/docker_swarm-mode.haproxy-test/blob/master/screen.png)
