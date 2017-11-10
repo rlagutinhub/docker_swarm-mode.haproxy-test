@@ -15,7 +15,7 @@ cd docker_swarm-mode.haproxy-test
 Docker Image:
 
 ```console
-docker build -t rlagutinhub/docker_swarm-mode.haproxy-test:201711082130 .
+docker build -t rlagutinhub/docker_swarm-mode.haproxy-test:201711101300 .
 ```
 
 Docker network:
@@ -32,7 +32,7 @@ docker service create --detach=false \
  -e PORTS="8080, 8081, 8082, 8083, 8084, 8085" \
  --network haproxy-balancer_prod \
  --constraint "node.role != manager" \
- rlagutinhub/docker_swarm-mode.haproxy-test:201711082130
+ rlagutinhub/docker_swarm-mode.haproxy-test:201711101300
 ```
 
 #### ADD Publish Ports (not required for a haproxy-balancer test):
