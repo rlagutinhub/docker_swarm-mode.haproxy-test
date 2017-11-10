@@ -2,8 +2,8 @@
 # maintainer="Lagutin R.A. <rlagutin@mta4.ru>"
 # name="docker_swarm-mode.haproxy-test"
 # description="docker_swarm-mode.haproxy-test"
-# version="v.1-prod."
-# release-date="201711082130"
+# version="v.2-prod."
+# release-date="201711101300"
 
 # Build Image:
 # docker build -t rlagutinhub/docker_swarm-mode.haproxy-test .
@@ -46,8 +46,8 @@ LABEL rlagutinhub.community.vendor="Lagutin R.A." \
  rlagutinhub.community.maintainer="Lagutin R.A. <rlagutin@mta4.ru>" \
  rlagutinhub.community.name="docker_swarm-mode.haproxy-test" \
  rlagutinhub.community.description="docker_swarm-mode.haproxy-test" \
- rlagutinhub.community.version="v.1-prod." \
- rlagutinhub.community.release-date="201711082130"
+ rlagutinhub.community.version="v.2-prod." \
+ rlagutinhub.community.release-date="201711101300"
 
 COPY app /app
 WORKDIR /app

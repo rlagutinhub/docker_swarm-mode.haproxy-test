@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 # NAME:    HAPROXY-TEST.PY
 # DESC:    DOCKER_SWARM-MODE.HAPROXY-TEST.
-# DATE:    13.10.2017
+# DATE:    10.11.2017
 # LANG:    PYTHON 3
 # AUTOR:   LAGUTIN R.A.
 # CONTACT: RLAGUTIN@MTA4.RU
@@ -34,7 +34,8 @@ proto_map = {
     (AF_INET6, SOCK_DGRAM): 'udp6',
 }
 
-visits = 0
+VISITS = 0
+
 app = Flask(__name__)
 
 
@@ -69,6 +70,15 @@ def netstat():
 
     # print(json.dumps(netstat_result, indent=4))
     return netstat_result
+
+
+def getsocket(pid):
+
+    for c in psutil.net_connections(kind='inet'):
+
+        if c.pid == int(pid) and c.status == 'ESTABLISHED':
+
+            return "%s:%s" % (c.laddr)
 
 
 def network():
@@ -111,8 +121,9 @@ def network():
 @app.route("/")
 def hello():
 
-    global visits
-    visits += 1
+    global VISITS
+
+    VISITS += 1
 
     html = "<html><head><title>DOCKER_SWARM-MODE.HAPROXY-TEST</title></head>" \
         "<style>" \
@@ -126,11 +137,12 @@ def hello():
         "</head>" \
         "<body>"
 
-    html += "<h3>Hello from <font color='#337ab7'>{name}</font></h3>".format(
-        name=request.host)
-    html += "<b>Visits:</b> {visits}<br>" \
-        "<b>Hostname:</b> {hostname}<br>".format(hostname=socket.gethostname(),
-                                                 visits=visits)
+    html += "<h2>Hello from <font color='#337ab7'>{name}</font></h2>".format(name=request.host)
+    html += "<b>Backend hostname:</b> {hostname}<br>".format(hostname=socket.gethostname())
+    html += "<b>Backend socket:</b> {socket}<br>".format(socket=getsocket(os.getpid()))
+    html += "<br>"
+
+    html += "<b>Visits:</b> {visits}<br>".format(visits=VISITS)
 
     if request.url:
 
@@ -153,7 +165,7 @@ def hello():
 
     if network_res:
 
-        html += "<h4>Networking:</h4>"
+        html += "<h4>Network:</h4>"
 
         for net in network_res:
 
