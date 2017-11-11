@@ -61,7 +61,7 @@ docker service update --detach=false \
  --publish-rm 10001/tcp \
  --publish-rm 10002/tcp
  ```
-  
+ 
 ---
 
 ![alt text](https://github.com/rlagutinhub/docker_swarm-mode.haproxy-test/blob/master/screen.png)
