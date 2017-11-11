@@ -1,6 +1,7 @@
 #!/bin/bash
 # https://docs.docker.com/engine/admin/multi-service_container/
 
+TIMEOUT=60
 PORTS=${PORTS:-"empty"}
 
 if [ "$PORTS" != "empty" ]; then
@@ -11,40 +12,59 @@ if [ "$PORTS" != "empty" ]; then
 
     for PORT in $PORTS; do
 
-        if [[ $PORT =~ ^-?[0-9]+$ ]]; then
+        if [[ $PORT =~ ^-?[0-9]+$ ]] && [ $PORT -gt 0 ] && [ $PORT -le 65535 ]; then
 
-            $(which gunicorn) -p /run/gunicorn.$PORT.pid --bind 0.0.0.0:$PORT app:app --daemon
-
-            status=$?
-            if [ $status -ne 0 ]; then
-                  echo "Failed to start: $status"
-                  exit $status
-
-                fi
+            RES_PORTS=$RES_PORTS' '$PORT
 
         fi
 
     done
 
+else
+
+    echo "Error: LIST OF PORTS not defined."
+    exit 1
+
 fi
+
+if [ -z "$RES_PORTS" ]; then
+
+    echo "Error: LIST OF PORTS is empty."
+    exit 1
+
+fi
+
+for PORT in $RES_PORTS; do
+
+    $(which gunicorn) -p /run/gunicorn.$PORT.pid --bind 0.0.0.0:$PORT app:app --daemon
+
+    status=$?
+
+    if [ $status -ne 0 ]; then
+
+          echo "Error: FLASK PROGRAM start error $status."
+          exit $status
+
+    fi
+
+    sleep 1 # delay pid file
+
+done
 
 while /bin/true; do
 
-    for PORT in $PORTS; do
+    for PORT in $RES_PORTS; do
 
-        if [[ $PORT =~ ^-?[0-9]+$ ]]; then
+        if [ $(ps -ax | grep -i $(cat /run/gunicorn.$PORT.pid) | grep -v 'grep' | wc -l) -eq 0 ]; then
 
-            if [ $(ps -ax | grep -i $(cat /run/gunicorn.$PORT.pid) | grep -v 'grep' | wc -l) -eq 0 ]; then
-
-                echo "One of the processes has already exited."
-                exit -1
-
-            fi
+            echo "Error: One of the FLASK PROGRAM has already exited."
+            exit 1
 
         fi
 
+
     done 
 
-    sleep 60 # delay
+    sleep $TIMEOUT # delay check pid
 
 done
