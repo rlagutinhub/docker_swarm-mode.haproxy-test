@@ -1,5 +1,5 @@
 ## Docker: docker_swarm-mode.haproxy-test
- 
+
 Compiled Docker image: https://hub.docker.com/r/rlagutinhub/docker_swarm-mode.haproxy-test/
 
 -	The image is used to test the work docker_swarm-mode.haproxy-balancer reverse proxy in Docker Swarm Mode.
