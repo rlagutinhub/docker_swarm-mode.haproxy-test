@@ -47,7 +47,7 @@ for PORT in $RES_PORTS; do
 
     fi
 
-    sleep 1 # delay pid file
+    sleep 10 # delay start
 
 done
 
